@@ -15,7 +15,7 @@ function parseCSV(text) {
 // Load CSV file from public/files (user must provide the file)
 async function loadProducts() {
 	try {
-	const response = await fetch('../../files/products.csv');
+	const response = await fetch('./files/products.csv');
 		if (!response.ok) throw new Error('CSV file not found');
 		const csvText = await response.text();
 		const products = parseCSV(csvText);
@@ -38,7 +38,7 @@ function displayProducts(products) {
 	};
 	products.forEach(product => {
 		// Try local image, fallback to placeholder
-		const localImg = `../repo/${product.image}`;
+	const localImg = `./repo/${product.image}`;
 		const placeholderImg = placeholders[product.image] || 'https://via.placeholder.com/200?text=No+Image';
 		const card = document.createElement('div');
 		card.className = 'product-card';
