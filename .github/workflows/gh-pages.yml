@@ -19,9 +19,11 @@ jobs:
       - name: Build static files
         run: |
           mkdir dist
-          cp -r src/* dist/
-          cp -r files dist/
-          cp -r repo dist/
+          cp src/index.html dist/index.html
+          cp src/style.css dist/style.css
+          cp src/app.js dist/app.js
+          cp -r files dist/files
+          cp -r repo dist/repo
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
