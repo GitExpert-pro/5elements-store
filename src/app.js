@@ -47,16 +47,36 @@ function displayProducts(products) {
 			<h2>${product.name}</h2>
 			<p>${product.description || ''}</p>
 			<p><strong>Price:</strong> $${product.price}</p>
-			<button onclick="orderProduct('${product.name}')">Order</button>
+			<button class="order-btn">Order</button>
 		`;
+		// Attach event listener for order
+		card.querySelector('.order-btn').addEventListener('click', function() {
+			orderProduct(product);
+		});
 		container.appendChild(card);
 	});
 }
 
-// Order button logic (to be extended)
-function orderProduct(productName) {
-	alert(`Order placed for: ${productName}`);
-	// Extend: Add order form, cart, etc.
+
+// Order button logic: send product details to backend
+async function orderProduct(product) {
+	try {
+		const response = await fetch('http://localhost:5000/order', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(product)
+		});
+		const result = await response.json();
+		if (result.status === 'success') {
+			alert(`Order placed! Saved to ${result.file}`);
+		} else {
+			alert('Order failed.');
+		}
+	} catch (err) {
+		alert('Could not place order. Is the Python server running?');
+	}
 }
 
 // Initial load
